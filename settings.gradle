@@ -1,0 +1,3 @@
+rootProject.name = 'event-audio'
+include 'event-audio-sdk'
+
