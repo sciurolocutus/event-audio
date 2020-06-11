@@ -12,11 +12,14 @@ subprojects {
         mavenCentral()
     }
 
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                artifact jar
-                artifactId = project.getName()
+    afterEvaluate {
+        publishing {
+            publications {
+                maven(MavenPublication) {
+                    //artifact jar
+                    artifactId = project.getName()
+                    from project.components.java
+                }
             }
         }
     }
