@@ -16,8 +16,7 @@ subprojects {
         publications {
             maven(MavenPublication) {
                 artifact jar
-                groupId = project.getGroup()
-                version = project.getVersion()
+                artifactId = project.getName()
             }
         }
     }
