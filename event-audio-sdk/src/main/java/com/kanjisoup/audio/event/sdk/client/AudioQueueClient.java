@@ -32,9 +32,6 @@ public class AudioQueueClient {
 
     try (Connection connection = connectionFactory.newConnection(); Channel channel = connection
         .createChannel();) {
-      channel.exchangeDeclare(config.getExchange(), config.getExchangeType(), false, false, null);
-      channel.queueDeclare(config.getQueueName(), false, false, false, null);
-      channel.queueBind(config.getQueueName(), config.getExchange(), config.getRoutingKey());
       channel.basicPublish(config.getExchange(), config.getRoutingKey(), null,
           gson.toJson(event).getBytes());
     } catch (TimeoutException e) {
@@ -43,6 +40,18 @@ public class AudioQueueClient {
     } catch (IOException e) {
       log.error("IOException while submitting queue message", e);
       throw new SubmissionFailedException("IOException: " + e.getMessage());
+    }
+  }
+
+  public void setupQueue() throws IOException, TimeoutException {
+    try (Connection connection = connectionFactory.newConnection(); Channel channel = connection
+        .createChannel();) {
+      channel.exchangeDeclare(config.getExchange(), config.getExchangeType(), false, false, null);
+      channel.queueDeclare(config.getQueueName(), false, false, false, null);
+      channel.queueBind(config.getQueueName(), config.getExchange(), config.getRoutingKey());
+    } catch (IOException | TimeoutException e) {
+      log.error("Exception while setting up queue objects: ", e);
+      throw e;
     }
   }
 }
