@@ -32,9 +32,9 @@ public class AudioQueueClient {
 
     try (Connection connection = connectionFactory.newConnection(); Channel channel = connection
         .createChannel();) {
-      channel.exchangeDeclare(config.getExchange(), "fanout", false, false, null);
-      channel.queueDeclare(config.getRoutingKey(), false, false, false, null);
-      channel.queueBind(config.getRoutingKey(), config.getExchange(), config.getRoutingKey());
+      channel.exchangeDeclare(config.getExchange(), config.getExchangeType(), false, false, null);
+      channel.queueDeclare(config.getQueueName(), false, false, false, null);
+      channel.queueBind(config.getQueueName(), config.getExchange(), config.getRoutingKey());
       channel.basicPublish(config.getExchange(), config.getRoutingKey(), null,
           gson.toJson(event).getBytes());
     } catch (TimeoutException e) {
