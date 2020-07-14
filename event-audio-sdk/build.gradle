@@ -6,6 +6,7 @@ plugins {
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.12'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.2.5.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp:2.2.5.RELEASE'
     implementation 'com.rabbitmq:amqp-client:5.7.3'
     implementation 'com.google.code.gson:gson:2.8.5'
 
